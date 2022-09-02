@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!--设置语言为中文-->
+<html lang="zh-CN" xmlns:s="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <!--设置字体格式为utf-8-->
+    <meta charset="UTF-8">
+    <title>实验一、表单实例</title>
+    <!--表单控件:用户输入数据，比如说输入用户名，输入密码。
+    提示信息：告诉用户输入框要输入什么值。
+    表单域:标识表单的开始和结束,语法<form>提示信息：表单控件</form>
+    -->
+    <!--<form>常用的属性:
+    action:表示表单要提交的位置、
+    method:表单提交的方式，常用的有get提交和post提交，默认提交方式是get。
+    get和post区别:
+    1、get提交：数据会显示在浏览器的地址栏，不安全，提交的数据大小是有限制。
+    2、post提交:数据不会显示在地址栏，是安全的，提交的数据大小没有限制。
+    -->
+    <!--合并操作:
+    要确定表格有多少行和多少列
+    要确定合并的是行，还是列。
+    合并行:rowspan,合并单元格:colspan
+    -->
+</head>
+<script>
+    //1.当失去焦点时,用户名校验函数
+    function checkUserName(){
+    //获取到usernameID对应的input元素节点和username对应的校验span元素节点
+        var usernameNode = document.getElementById("usernameID");
+        var usernameCheckNode = document.getElementById("usernameCheckID");
+    //定义校验正则(\u4E00-\u9FA5代表中文)
+        var usernameReg = /^[\u4e00-\u9fa50-9A-Za-z]{6,10}$/ig;
+    //获取到username元素节点的value属性值
+        var usernameValue = usernameNode.value;
+    //判断value属性值是否匹配正则并进行相关处理
+        if (usernameReg.test(usernameValue)) {
+            usernameCheckNode.innerText = "用户名输入成功！";  //当用户名输入成功时候的校验结果
+            usernameCheckNode.style.color = "green";
+            return true;
+        } else{
+            usernameCheckNode.innerText = "用户名输入失败！请输入6~10由字母或数字或汉字组成的用户名";  //当用户名输入失败时候的校验结果
+            usernameCheckNode.style.color = "red";
+            return false;
+        }
+    }
+    //2.当失去焦点时,密码校验函数
+    function checkPassword(){
+    //获取到passwordID对应的input元素节点和password对应的校验span元素节点
+        var passwordNode = document.getElementById("passwordID");
+        var passwordCheckNode = document.getElementById("passwordCheckID");
+    //定义校验正则(至少八个字符，至少一个大写字母，一个小写字母，一个数字和一个特殊字符)
+        var passwordReg = new RegExp("^(?=.*[a-zA-Z\d])[!-~]{8,16}$","ig");
+    //获取到password元素节点的value属性值
+        var passwordValue = passwordNode.value;
+    //判断value属性值是否匹配正则并进行相关处理
+        if (passwordReg.test(passwordValue)) {
+            passwordCheckNode.innerText = "密码输入成功！";  //当密码输入成功时候的校验结果
+            passwordCheckNode.style.color = "green";
+            return true;
+        } else{
+            passwordCheckNode.innerText = "密码输入失败！密码为8~16位，要求由字母字符数字组成";  //当密码输入失败时候的校验结果
+            passwordCheckNode.style.color = "red";
+            return false;
+        }
+    }
+    //3.当失去焦点时,手机号校验函数
+    function checkPhoneNumber(){
+    //获取到phoneID对应的input元素节点和phoneNumber对应的校验span元素节点
+        var phoneNode = document.getElementById("phoneID");
+        var phoneCheckNode = document.getElementById("phoneCheckId");
+    //定义校验正则
+        var phoneReg = /^1[0-9]{10}$/ig;
+    //获取到phoneNumber元素节点的value属性值
+        var phoneValue = phoneNode.value;
+    //判断value属性值是否匹配正则并进行相关处理
+        if (phoneReg.test(phoneValue)) {
+            phoneCheckNode.innerText = "手机号输入成功！";  //当手机号输入成功时候的校验结果
+            phoneCheckNode.style.color = "green";
+            return true;
+        } else{
+            phoneCheckNode.innerText = "手机号输入失败！请输入中国大陆手机号码";  //当手机号输入失败时候的校验结果
+            phoneCheckNode.style.color = "red";
+            return false;
+        }
+    }
+    //4.上传文件校验
+    function checkfile(){
+        if(document.getElementById("photo").value==null||document.getElementById("photo").value==""){
+            alert("请上传文件");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //5.兴趣爱好多选按钮选择校验
+    function checkhobby(){
+        if(document.getElementById("film").checked||document.getElementById("game").checked ||document.getElementById("buy").checked
+        ||document.getElementById("write").checked||document.getElementById("play").checked||document.getElementById("eat").checked
+        ||document.getElementById("code").checked||document.getElementById("dance").checked||document.getElementById("ktv").checked){
+            return true;
+        }else{
+            alert("请选择你的兴趣爱好")
+            return false;
+        }
+    }
+    //6.性别单选按钮选择校验
+    function checksex(){
+        if(document.getElementById("male").checked||document.getElementById("female").checked){
+            return true;
+        }
+        else {
+            alert("请选择你的性别")
+            return false;
+        }
+    }
+    //7.定义整体提交数据校验函数
+    function checkInput(){
+        if (checkUserName() && checkPassword() && checkPhoneNumber()&&checkfile()&&checksex()&&checkhobby()) {
+            window.open("registersuccess.html",'_blank')
+            return true;
+        } else{
+            return false;
+        }
+    }
+    //8.调用多个方法
+    function check(){
+        checkPassword();
+        checksex();
+        checkhobby();
+        checkfile();
+        checkPhoneNumber();
+    }
+</script>
+<body>
+<!--2、表单控件:<input />
+输入框控件的属性type: 文本框:text
+密码框:password 单选按钮:radio
+复选按钮:checkbox 上传按钮:file
+提交按钮:submit 重置按钮:reset
+注意:表单想要把数据提交到指定的位置，输入框必须要有name属性。-->
+<!--3、文本域标记:<textarea rows="文本域的行数" cols="文本域每行输入的字符数"></textarea>-->
+<!--演示表单控件-->
+<!--fieldset定义围绕表单中元素的边框。-->
+<div id="Layer1" style="position:absolute; width:100%; height:100%; background-color: snow; z-index:-1" >
+    <!--设置背景图片的宽度和高度-->
+    <img src="color.jpg" height="100%" width="100%"/>
+</div>
+<fieldset>
+    <!--legend定义 fieldset 元素的标题。-->
+    <legend>注册新用户</legend>
+    <!--表单提交方式-->
+    <!--数据不会显示在地址栏，是安全的，提交的数据大小没有限制。-->
+    <form id="loginID" name="login" action="#" method="post" onsubmit="return checkInput()">
+        <table align="center" border="0" cellpadding="3">
+            <!--1.用户名输入所在的行-->
+            <tr>
+                <!--单元格右对齐-->
+                <td align="right">用户名:</td>
+                <td>
+                    <!--输入用户名的文件框控件，所以在输入过程中，用户名是直接显示出来的-->
+                    <input type="text" id="usernameID" name="username" size="40" placeholder="用户名为6~10位，由字母或数字或汉字组成" onblur="checkUserName()"/>
+                    <span id="usernameCheckID"></span> <br />
+                </td>
+            </tr>
+                <!-2.密码输入所在的行-->
+            <tr>
+                <!--单元格右对齐-->
+                <td align="right">密码:</td>
+                <td>
+                    <!--密码框控件，输入的文字用原点符号隐藏的-->
+                <input type="password" id="passwordID" name="password" size="40" placeholder="密码为8~16位，要求由字母字符数字组成" onblur="checkPassword()"/>
+                <span id="passwordCheckID"></span> <br />
+                </td>
+            </tr>
+                <!--3.性别所在的行-->
+            <tr>
+                <!--单元格右对齐-->
+                <td align="right">性别:</td>
+                <td>
+                    <!--radio单选按钮控件，需要设置对应的值-->
+                    <!--性别为男的单选按钮-->
+                    <input type="radio" name="sex" id="male" value="1" />男
+                    <!--性别为女的单选按钮-->
+                    <input type="radio" name="sex" id="female" value="1" />女
+                </td>
+            </tr>
+            <!--4.学历选择所在的行-->
+            <tr>
+                <td align="right">学历:</td>
+                <td>
+                    <!--学历:下拉框，下拉框使用的是select标签-->
+                    <select name="education">
+                        <option value="doctor">小学</option>
+                        <option value="master">初中</option>
+                        <option value="college">高中</option>
+                        <option value="doctor">本科</option>
+                        <option value="master">硕士</option>
+                        <option value="college">博士</option>
+                    </select>
+                </td>
+            </tr>
+            <!--5.兴趣所在的行-->
+            <tr>
+                <!--单元格右对齐-->
+                <td align="right">兴趣:</td>
+                <td>
+                    <!--checkbox复选框控件-->
+                    <input type="checkbox" name="hobby" id="film" value="1" />看电影
+                    <input type="checkbox" name="hobby" id="game" value="1"/>打游戏
+                    <input type="checkbox" name="hobby" id="buy" value="1"/>买买买<br />
+                    <input type="checkbox" name="hobby" id="write" value="1"/>写小说
+                    <input type="checkbox" name="hobby" id="play" value="1"/>羽毛球
+                    <input type="checkbox" name="hobby" id="eat"  value="1"/>吃吃吃<br />
+                    <input type="checkbox" name="hobby" id="code" value="1"/>敲代码
+                    <input type="checkbox" name="hobby" id="dance" value="1"/>拉丁舞
+                    <input type="checkbox" name="hobby" id="ktv" value="1"/>KTV<br />
+                </td>
+            </tr>
+            <!--6.头像上传所在的行-->
+            <tr>
+                <td align="right">头像:</td>
+                <td>
+                    <!--图片文件上传像控件-->
+                    <input type="file" name="photo" id="photo" />
+                </td>
+            </tr>
+            <!--7.手机号所在的行-->
+            <tr>
+                <td align="right">手机号:</td>
+                <td>
+                    <input type="text" id="phoneID" name="phoneNumber" size="40" placeholder="请输入中国大陆手机号" onblur="checkPhoneNumber()"/>
+                    <span id="phoneCheckId"></span>
+                </td>
+            </tr>
+    <br />
+            <!--8.提交和重置按钮设计-->
+            <tr>
+                <!--rowspan合并行，
+                colspan合并上下两列单元格，
+                并且居中-->
+                <td colspan="2" align="center">
+                    <!--提交按钮和重置控件-->
+                    <!--onclick元素在点击时发生，
+                    即当点击提交按钮时，调用a方法，跳转到注册成功界面-->
+                    <input type="submit" value="提交" onclick="check()"/>
+                    <!--重置按钮，当点击重置按钮时，情况所有数据-->
+                    <input type="reset" value="重置" />
+                </td>
+            </tr>
+        </table>
+</form>
+</fieldset>
+</body>
+</html>
